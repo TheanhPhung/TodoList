@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView 
+from django.views.generic.edit import CreateView
 
 
 from .models import *
@@ -23,3 +24,9 @@ class SubtaskListView(ListView):
     def get_queryset(self):
         self.task = get_object_or_404(Task, id=self.kwargs["task_id"])
         return Subtask.objects.filter(node=self.task)
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    fields = ["name", "deadline", "description"]
+    template_name = "todolist/create_task.html"

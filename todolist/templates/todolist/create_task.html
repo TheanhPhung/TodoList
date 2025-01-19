@@ -1,0 +1,18 @@
+{% extends "todolist/base.html" %}
+
+{% block title %}Create new task{% endblock %}
+
+{% block body %}
+<div>
+	<form action="{% url 'create_task' %}" method="post">
+		{% csrf_token %}
+		<label for="name">Task name: </label>
+		<input type="text" name="name" required autofocus>
+		<label for="deadline">Deadline: </label>
+		<input type="date" name="deadline">
+		<label for="description">Description</label>
+		<input type="type" name="description">
+		<button type="submit">Create</button>
+	</form>
+</div>
+{% endblock %}
