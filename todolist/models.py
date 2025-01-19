@@ -31,8 +31,13 @@ class Task(models.Model):
         return self.name
     
     def estimated_progress(self):
-        total_time = self.deadline.day - self.create_at.day * 86400
-        total_time -= (self.create_at.hour * 3600 + self.create_at.minute * 60 + self.create_at.second)
-        real_time = timezone.now() - self.create_at
-        real_time = real_time.days * 86400 + real_time.seconds
-        return real_time / total_time * 100
+        pass
+
+class Subtask(models.Model):
+    name = models.CharField(max_length=100)
+    create_at = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateField(null=True, blank=True)
+    progress_score = models.IntegerField(default=10)
+
+    def __str__(self):
+        return self.name
