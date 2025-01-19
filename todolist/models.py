@@ -31,10 +31,16 @@ class Task(models.Model):
         return self.name
     
     def estimated_progress(self):
-        pass
+        subtasks_list = Subtask.objects.filter(node=self)
+        progress_score = 0
+        for subtask in subtasks_list:
+            progress_score += subtask.progress_score
+        return progress_score
+        
 
 class Subtask(models.Model):
     name = models.CharField(max_length=100)
+    node = models.ForeignKey(Task, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField(null=True, blank=True)
     progress_score = models.IntegerField(default=10)

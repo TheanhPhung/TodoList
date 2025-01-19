@@ -1,0 +1,13 @@
+{% extends "todolist/base.html" %}
+
+{% block title %}Task detail{% endblock %}
+
+{% block body %}
+	<h2>{{ task.name }}</h2>
+	<p><strong>Create at: </strong>{{ task.create_at }}</p>
+	<p><strong>Deadline: </strong>{{ task.deadline }}</p>
+	<p><strong>Description: </strong>{{ task.description }}</p>
+	<p><strong>Status: </strong>{{ task.status }}</p>
+	<p><strong>Priority: </strong>{{ task.priority }}</p>
+	<p><strong>Progress: </strong>{{ task.estimated_progress }}<p>
+{% endblock %}
