@@ -10,4 +10,5 @@
 	<p><strong>Status: </strong>{{ task.status }}</p>
 	<p><strong>Priority: </strong>{{ task.priority }}</p>
 	<p><strong>Progress: </strong>{{ task.estimated_progress }}<p>
+	<p><a href="{% url 'subtasks' task.id %}">Subtasks List</a></p>
 {% endblock %}

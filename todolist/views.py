@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView 
 
 
@@ -15,3 +14,12 @@ class TaskListView(ListView):
 class TaskDetailView(DetailView):
     model = Task
     template_name = "todolist/task.html"
+
+
+class SubtaskListView(ListView):
+    context_object_name = "subtasks"
+    template_name = "todolist/subtasks.html"
+
+    def get_queryset(self):
+        self.task = get_object_or_404(Task, id=self.kwargs["task_id"])
+        return Subtask.objects.filter(node=self.task)

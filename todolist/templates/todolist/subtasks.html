@@ -1,0 +1,13 @@
+{% extends "todolist/index.html" %}
+
+{% block title %}Subtask list{% endblock %}
+
+{% block body %}
+<div>
+	<ul>
+		{% for subtask in subtasks %}
+		<li>{{ subtask.name }} - {{ subtask.progress_score }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}
