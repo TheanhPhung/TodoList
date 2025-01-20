@@ -40,7 +40,7 @@ class Task(models.Model):
 
 class Subtask(models.Model):
     name = models.CharField(max_length=100)
-    node = models.ForeignKey(Task, on_delete=models.CASCADE)
+    node = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="child_subtasks")
     create_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField(null=True, blank=True)
     progress_score = models.IntegerField(default=10)

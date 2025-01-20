@@ -4,10 +4,12 @@
 
 {% block body %}
 <div>
+	{% comment %}<h2>{{ task.name }} - {{ task.id }}</h2>{% endcomment %}
 	<ul>
-		{% for subtask in subtasks %}
+		{% for subtask in object_list %}
 		<li>{{ subtask.name }} - {{ subtask.progress_score }}</li>
 		{% endfor %}
 	</ul>
+	<a href="{% url 'create_subtask' task.id %}">Create new subtask</a>
 </div>
 {% endblock %}

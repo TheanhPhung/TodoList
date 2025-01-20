@@ -10,5 +10,6 @@
 	<li><a href="{% url 'task' task.id %}">{{ task }}</li>
 	{% endfor %}
 	</ul>
+	<a href="{% url 'create_task' %}">Create new task</a>
 </div>
 {% endblock %}
