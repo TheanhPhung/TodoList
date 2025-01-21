@@ -30,7 +30,7 @@ class SubtaskListView(ListView):
 
     def get_queryset(self):
         task = get_object_or_404(Task, id=self.kwargs["task_id"])
-        return task.child_subtasks.all()
+        return task.child_subtasks.filter(complete=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -97,8 +97,15 @@ class CompleteSubtaskView(View):
         subtask = get_object_or_404(Subtask, id=int(pk))
         subtask.complete = True
         subtask.save()
-        return redirect(reverse_lazy("task", kwargs={"pk": subtask.node.id}))
+        node = subtask.node
+        return redirect(reverse_lazy("subtasks", kwargs={"task_id": node.id}))
 
 
 class DeleteSubtaskView(View):
-    pass
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs["pk"]
+        subtask = get_object_or_404(Subtask, id=int(pk))
+        node = subtask.node
+        subtask.delete()
+        node = subtask.node
+        return redirect(reverse_lazy("subtasks", kwargs={"task_id": node.id}))
