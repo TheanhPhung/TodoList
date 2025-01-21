@@ -1,9 +1,9 @@
-from django.urls import reverse, reverse_lazy
-from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Task, Subtask
 from .form import TaskForm, SubtaskForm
@@ -15,6 +15,9 @@ class TaskListView(ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "todolist/index.html"
+
+    def get_queryset(self):
+        return Task.objects.exclude(status="completed")
 
 
 class TaskDetailView(DetailView):
@@ -62,20 +65,17 @@ class SubtaskCreateView(CreateView):
         return reverse_lazy("subtasks", kwargs={"task_id": self.kwargs["task_id"]})
 
 
-# class SubtaskCreateView(View):
-    # def get(self, request, task_id):
-        # context = {
-            # "form": SubtaskForm,
-            # "task_id": task_id,
-        # }
-        # return render(request, "todolist/create_subtask.html", context)
+class UpdateTaskView(UpdateView):
+    model = Task
+    fields = ["name", "description", "deadline", "status", "priority"]
+    template_name = "todolist/task_update_form.html"
+    
+    def get_success_url(self):
+        return reverse_lazy("task", kwargs={"pk": self.kwargs["pk"]})
 
-    # def post(self, request, task_id):
-        # form = SubtaskForm(request.POST)
-        # if form.is_valid():
-            # task = get_object_or_404(Task, id=int(task_id))
-            # subtask = form.save(commit=False)
-            # subtask.node = task
-            # subtask.save()
 
-            # return redirect("subtasks", task_id=task_id)
+class CompleteTaskView(View):
+    def post(self, task_id):
+        task = get_object_or_404(Task, id=int(task_id))
+        task.status = "completed"
+        return reverse_lazy("index")
