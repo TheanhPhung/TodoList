@@ -10,4 +10,4 @@ class TaskForm(forms.ModelForm):
 class SubtaskForm(forms.ModelForm):
     class Meta:
         model = Subtask
-        fields = ["name", "deadline", "progress_score", "node"]
+        fields = ["name", "deadline", "progress_score"]
