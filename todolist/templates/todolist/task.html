@@ -12,8 +12,18 @@
 	<p><strong>Progress: </strong>{{ task.estimated_progress }}<p>
 	<p><a href="{% url 'subtasks' task.id %}">Subtasks List</a></p>
 	<p><a href="{% url 'update_task' task.id %}">Edit task</a></p>
-	<form action="{% url 'complete_task' task.id %}" method="post">
-		{% csrf_token %}
-		<button class="btn btn-success" type="submit">Complete</button>
-	</form>
+	<div class ="mt-3 row">
+		<div class="col-1">
+			<form action="{% url 'complete_task' task.id %}" method="post">
+				{% csrf_token %}
+				<button class="btn btn-success" type="submit">Complete</button>
+			</form>
+		</div>
+		<div class="col-1">
+			<form action="{% url 'delete_task' task.id %}" method="post">
+				{% csrf_token %}
+				<button class="btn btn-danger" type="submit">Delete</button>
+			</form>
+		</div>
+	</div>
 {% endblock %}

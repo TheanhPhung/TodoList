@@ -44,6 +44,7 @@ class Subtask(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField(null=True, blank=True)
     progress_score = models.IntegerField(default=10)
+    complete = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -12,9 +12,19 @@
 			<div class="flex-item mt-1">
 				<p>{{ subtask.name }} - {{ subtask.progress_score }}</p>
 			</div>
-			<div class="flex-item">
-				<button class="btn btn-danger">Delete</button>
-				<button class="btn btn-success">Complete</button>
+			<div class="flex-item row">
+				<div class="col-1">
+					<form action="{% url 'delete_subtask' subtask.id %}" method="post">
+						{% csrf_token %}
+						<button class="btn btn-danger">Delete</button>
+					</form>
+				</div>
+				<div class="col-1">
+					<form action="{% url 'complete_subtask' subtask.id %}" method="post">
+						{% csrf_token %}
+						<button class="btn btn-success">Complete</button>
+					</form>
+				</div>
 			</div>
 		</li>
 		{% endfor %}

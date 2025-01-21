@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.base import RedirectView
@@ -75,7 +75,30 @@ class UpdateTaskView(UpdateView):
 
 
 class CompleteTaskView(View):
-    def post(self, task_id):
-        task = get_object_or_404(Task, id=int(task_id))
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs["pk"]
+        task = get_object_or_404(Task, id=int(pk))
         task.status = "completed"
-        return reverse_lazy("index")
+        task.save()
+        return redirect(reverse_lazy("index"))
+
+
+class DeleteTaskView(View):
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs["pk"]
+        task = get_object_or_404(Task, id=int(pk))
+        task.delete()
+        return redirect(reverse_lazy("index"))
+
+
+class CompleteSubtaskView(View):
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs["pk"]
+        subtask = get_object_or_404(Subtask, id=int(pk))
+        subtask.complete = True
+        subtask.save()
+        return redirect(reverse_lazy("task", kwargs={"pk": subtask.node.id}))
+
+
+class DeleteSubtaskView(View):
+    pass
