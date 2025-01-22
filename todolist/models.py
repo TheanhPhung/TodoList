@@ -20,11 +20,9 @@ class Task(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    create_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField(null=True, blank=True)
-    end_at = models.DateTimeField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default="not_start")
     priority = models.IntegerField(default=0, choices=PRIORITY_CHOICES)
 
     def __str__(self):

@@ -3,9 +3,20 @@
 {% block title %}Update Subtask{% endblock %}
 
 {% block body %}
-<form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input class="btn btn-primary" type="submit" value="Update">
-</form>
+<div>
+<h5 class="mt-3"><a href="{% url 'task' task_id %}">Return to the task</a></h5>
+	<form method="post">
+		{% csrf_token %}
+		<div class="form-group mt-5 mb-3 row">
+			<label class="control-label col-1 mt-1" for="id_name">Name</label>
+			<div class="col-10">
+				{{ form.name }}
+			</div>
+			<div class="col-1 text-center">
+				<input class="btn btn-primary" type="submit" value="Update">
+			</div>
+		</div>
+		<input type="hidden" name="task_id" value="{{ task_id }}">
+	</form>
+</div>
 {% endblock %}

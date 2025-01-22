@@ -11,13 +11,29 @@ from .form import TaskForm, SubtaskForm
 from .models import *
 
 
-class TaskListView(ListView):
+class TaskBaseView(ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "todolist/index.html"
 
+
+class TaskListView(TaskBaseView):
     def get_queryset(self):
         return Task.objects.exclude(status="completed")
+
+
+class CompletedTaskListView(TaskBaseView):
+    def get_queryset(self):
+        return Task.objects.filter(status="completed")
+
+
+# class TaskListView(ListView):
+    # model = Task
+    # context_object_name = "tasks"
+    # template_name = "todolist/index.html"
+
+    # def get_queryset(self):
+        # return Task.objects.exclude(status="completed")
 
 
 class TaskDetailView(DetailView):
@@ -67,7 +83,8 @@ class SubtaskCreateView(CreateView):
 
 class UpdateTaskView(UpdateView):
     model = Task
-    fields = ["name", "description", "deadline", "status", "priority"]
+    # fields = ["name", "description", "deadline", "status", "priority"]
+    form_class = TaskForm
     template_name = "todolist/task_update_form.html"
     
     def get_success_url(self):
@@ -76,7 +93,8 @@ class UpdateTaskView(UpdateView):
 
 class UpdateSubtaskView(UpdateView):
     model = Subtask
-    fields = ["name"]
+    # fields = ["name"]
+    form_class = SubtaskForm
     template_name_suffix = "_update_form"
 
     def get_success_url(self):

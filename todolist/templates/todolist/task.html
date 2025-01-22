@@ -4,7 +4,6 @@
 
 {% block body %}
 	<h2>{{ task.name }}</h2>
-	<p><strong>Create at: </strong>{{ task.create_at }}</p>
 	<p><strong>Deadline: </strong>{{ task.deadline }}</p>
 	<p><strong>Description: </strong>{{ task.description }}</p>
 	<p><strong>Status: </strong>{{ task.get_status_display }}</p>
@@ -23,6 +22,7 @@
 				<button class="btn btn-success" type="submit">Complete</button>
 			</form>
 		</div>
+		<div style="width: 10px"></div>
 		<div class="col-1">
 			<form action="{% url 'delete_task' task.id %}" method="post">
 				{% csrf_token %}

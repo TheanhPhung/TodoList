@@ -4,19 +4,19 @@
 
 {% block body %}
 <div>
-	{% comment %}<form action="{% url 'create_task' %}" method="post">{% endcomment %}
-		{% comment %}{% csrf_token %}{% endcomment %}
-		{% comment %}<label for="name">Task name: </label>{% endcomment %}
-		{% comment %}<input type="text" name="name" required autofocus>{% endcomment %}
-		{% comment %}<label for="deadline">Deadline: </label>{% endcomment %}
-		{% comment %}<input type="date" name="deadline">{% endcomment %}
-		{% comment %}<label for="description">Description</label>{% endcomment %}
-		{% comment %}<input type="type" name="description">{% endcomment %}
-		{% comment %}<button type="submit">Create</button>{% endcomment %}
 	<form method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<input class="btn btn-success" type="submit" value="Create">
+		{% for field in form %}
+			<div class="form-group mb-3 row">
+				<label class="control-label col-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+				<div class="col-11">
+					{{ field }}
+				</div>
+			</div>
+		{% endfor %}
+		<div class="text-center">
+			<input class="btn btn-success col-1" type="submit" value="Create">
+		</div>
 	</form>
 </div>
 {% endblock %}

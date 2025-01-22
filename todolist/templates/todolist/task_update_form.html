@@ -5,7 +5,16 @@
 {% block body %}
 <form method="post">
 	{% csrf_token %}
-	{{ form.as_p }}
-	<input class="btn btn-primary" type="submit" value="Update">
+	{% for field in form %}
+		<div class="form-group mb-3 row">
+			<label class="control-label col-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+			<div class="col-11">
+				{{ field }}
+			</div>
+		</div>
+	{% endfor %}
+	<div class="text-center">
+		<input class="btn btn-primary col-1" type="submit" value="Update">
+	</div>
 </form>
 {% endblock %}

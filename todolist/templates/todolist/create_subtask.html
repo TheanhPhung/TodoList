@@ -1,14 +1,22 @@
 {% extends "todolist/base.html" %}
 
-{% block title %}Create new subtasktask{% endblock %}
+{% block title %}Create new subtask{% endblock %}
 
 {% block body %}
 <div>
+	<h5 class="mt-3"><a href="{% url 'task' task_id %}">Return to the task</a></h5>
 	<form method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}
+		<div class="form-group mt-5 mb-3 row">
+			<label class="control-label col-1 mt-1" for="id_name">Name</label>
+			<div class="col-10">
+				{{ form.name }}
+			</div>
+			<div class="col-1 text-center">
+				<input class="btn btn-success" type="submit" value="Create">
+			</div>
+		</div>
 		<input type="hidden" name="task_id" value="{{ task_id }}">
-		<input type="submit" value="Create">
 	</form>
 </div>
 {% endblock %}
