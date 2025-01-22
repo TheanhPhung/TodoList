@@ -12,9 +12,22 @@
 			<div class="flex-item">
 				<a href="{% url 'task' task.id %}">{{ task }}</a>
 			</div>
+
 			<div class="flex-item">
-				{% comment %}Progress-bar{% endcomment %}
-				Progress - {{ task.estimated_progress }}%
+				<div class="d-flex flex-row justify-content-end">
+					<div class="flex-item" style="border:solid 1px; width:300px; background-color:red">
+						<p class="text-center">{{ task.priority }}</p>
+					</div>
+
+					<div class="flex-item" style="width:30px"></div>
+
+					<div class="flex-item">
+						{% comment %}Progress-bar{% endcomment %}
+						<div class="progress" style="width:300px; height:30px">
+							<div class="progress-bar" style="width:{{ task.estimated_progress }}%">{{ task.estimated_progress }}</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</li>

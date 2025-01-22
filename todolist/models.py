@@ -32,18 +32,28 @@ class Task(models.Model):
     
     def estimated_progress(self):
         subtasks_list = Subtask.objects.filter(node=self)
+        total_score = 0
         progress_score = 0
         for subtask in subtasks_list:
-            progress_score += subtask.progress_score
-        return progress_score
+            total_score += subtask.progress_score
+            if subtask.complete == True:
+                progress_score += subtask.progress_score
+        
+        if progress_score > 0:
+            if progress_score < total_score:
+                self.status = "in_progress"
+                self.save()
+            else:
+                self.status = "completed"
+                self.save()
+
+        return 0 if total_score == 0 else progress_score / total_score * 100
         
 
 class Subtask(models.Model):
     name = models.CharField(max_length=100)
     node = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="child_subtasks")
-    create_at = models.DateTimeField(auto_now_add=True)
-    deadline = models.DateField(null=True, blank=True)
-    progress_score = models.IntegerField(default=10)
+    progress_score = models.IntegerField(default=1)
     complete = models.BooleanField(default=False)
 
     def __str__(self):

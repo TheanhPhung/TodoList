@@ -72,6 +72,18 @@ class UpdateTaskView(UpdateView):
     
     def get_success_url(self):
         return reverse_lazy("task", kwargs={"pk": self.kwargs["pk"]})
+    
+
+class UpdateSubtaskView(UpdateView):
+    model = Subtask
+    fields = ["name"]
+    template_name_suffix = "_update_form"
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        subtask = get_object_or_404(Subtask, id=int(pk))
+        task = subtask.node
+        return reverse_lazy("subtasks", kwargs={"task_id": task.id})
 
 
 class CompleteTaskView(View):

@@ -1,0 +1,11 @@
+{% extends "todolist/base.html" %}
+
+{% block title %}Update Subtask{% endblock %}
+
+{% block body %}
+<form method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input class="btn btn-primary" type="submit" value="Update">
+</form>
+{% endblock %}
