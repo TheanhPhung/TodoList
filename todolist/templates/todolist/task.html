@@ -7,11 +7,11 @@
 	<p><strong>Create at: </strong>{{ task.create_at }}</p>
 	<p><strong>Deadline: </strong>{{ task.deadline }}</p>
 	<p><strong>Description: </strong>{{ task.description }}</p>
-	<p><strong>Status: </strong>{{ task.status }}</p>
-	<p><strong>Priority: </strong>{{ task.priority }}</p>
+	<p><strong>Status: </strong>{{ task.get_status_display }}</p>
+	<p><strong>Priority: </strong>{{ task.get_priority_display }}</p>
 
 	<div class="progress mb-3" style="width:300px; height:30px">
-		<div class="progress-bar" style="width:{{ task.estimated_progress }}%">{{ task.estimated_progress|floatformat:2 }}%</div>
+		<div class="progress-bar" style="width:{{ task.estimated_progress }}%">{{ task.estimated_progress|floatformat:0 }}%</div>
 	</div>
 
 	<p><a href="{% url 'subtasks' task.id %}">Subtasks List</a></p>
